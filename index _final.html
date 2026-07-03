@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>跨域 AI 學習導航站｜課程推薦問卷</title>
+  <style>
+    :root {
+      --bg: #f3f7fb;
+      --card: #ffffff;
+      --ink: #1b2f42;
+      --muted: #64788b;
+      --primary: #0f4c81;
+      --primary-2: #1769aa;
+      --accent: #22a7a0;
+      --accent-soft: #e5f7f5;
+      --line: #dbe6ef;
+      --danger: #b42318;
+      --warning: #b45309;
+      --ok: #12805c;
+      --shadow: 0 22px 50px rgba(15, 76, 129, 0.12);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 13px;
+      --max: 860px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(34, 167, 160, 0.17), transparent 32rem),
+        radial-gradient(circle at bottom right, rgba(15, 76, 129, 0.14), transparent 34rem),
+        var(--bg);
+    }
+
+    a { color: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    .site-shell {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 26px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 850;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 10px 22px rgba(15, 76, 129, 0.22);
+      font-size: 19px;
+    }
+
+    .demo-pill {
+      border: 1px solid rgba(15, 76, 129, 0.16);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--muted);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .intro-panel,
+    .main-card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(216, 225, 234, 0.92);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .intro-panel {
+      padding: 34px 38px;
+      position: relative;
+      display: grid;
+      gap: 24px;
+    }
+
+    .intro-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 auto;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(34, 167, 160, 0.18), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      color: var(--primary);
+      background: #eaf2f8;
+      border: 1px solid #d7e7f2;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 56px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 14px;
+      color: #12324a;
+    }
+
+    .subtitle {
+      font-size: clamp(21px, 3vw, 30px);
+      color: var(--primary);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .lead {
+      color: #40566a;
+      font-size: 17px;
+      line-height: 1.85;
+      max-width: 720px;
+      margin-bottom: 0;
+    }
+
+    .intro-notes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .note-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 13px 14px;
+      background: rgba(244, 247, 251, 0.86);
+      border: 1px solid #e3ebf2;
+      border-radius: var(--radius-md);
+      color: #4b6276;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .note-card strong { color: #1d4869; }
+
+    .main-card {
+      min-height: 580px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      padding: 24px 30px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(248, 251, 254, 0.96), rgba(255,255,255,0.94));
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .step-text {
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 0.03em;
+    }
+
+    .save-status {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e4ebf2;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: inherit;
+      transition: width 0.28s ease;
+    }
+
+    .screen {
+      display: none;
+      flex: 1;
+      padding: 32px 30px 30px;
+      animation: fadeIn 0.22s ease;
+    }
+
+    .screen.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .screen-title {
+      font-size: 27px;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .screen-desc {
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    label,
+    .field-label {
+      display: block;
+      font-weight: 800;
+      color: #243d52;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .required::after {
+      content: " *";
+      color: var(--danger);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #ccd9e4;
+      border-radius: var(--radius-sm);
+      padding: 13px 14px;
+      font: inherit;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+      transition: border 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary-2);
+      box-shadow: 0 0 0 4px rgba(23, 105, 170, 0.12);
+    }
+
+    .choice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .radio-chip,
+    .checkbox-chip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 13px;
+      border: 1px solid #cedbe6;
+      background: #fff;
+      border-radius: 999px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.16s ease;
+      color: #345064;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .radio-chip input,
+    .checkbox-chip input { accent-color: var(--primary); }
+
+    .radio-chip:has(input:checked),
+    .checkbox-chip:has(input:checked) {
+      border-color: rgba(15, 76, 129, 0.42);
+      background: #edf6fd;
+      color: var(--primary);
+      box-shadow: 0 8px 18px rgba(15, 76, 129, 0.1);
+    }
+
+    .muted-box {
+      padding: 16px;
+      border: 1px dashed #bfd0df;
+      border-radius: var(--radius-md);
+      background: #f7fafc;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+
+    .conditional-panel,
+    .question-card,
+    .carousel-card {
+      margin-top: 12px;
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid #dae6ef;
+      background: #fbfdff;
+    }
+
+    .conditional-panel.is-disabled {
+      opacity: 0.56;
+      pointer-events: none;
+      filter: grayscale(0.2);
+    }
+
+    .course-groups {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .course-group {
+      padding: 14px;
+      border: 1px solid #e0eaf2;
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .course-group-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .course-group-title span:last-child {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .course-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .course-option {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 13px;
+      border: 1px solid #d9e5ee;
+      border-radius: 14px;
+      background: #fff;
+      color: #2e4a60;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .course-option input { accent-color: var(--primary); }
+
+    .course-option:has(input:checked) {
+      border-color: rgba(15, 76, 129, 0.42);
+      background: #edf6fd;
+      color: var(--primary);
+      box-shadow: 0 8px 18px rgba(15, 76, 129, 0.1);
+    }
+
+    .course-name { font-weight: 800; line-height: 1.45; }
+    .course-code { color: #708498; font-size: 13px; font-weight: 800; white-space: nowrap; }
+
+    .experience-score {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 16px;
+      margin-top: 16px;
+      border-radius: 16px;
+      background: #f7fafc;
+      border: 1px solid #dce7f0;
+      color: #40566a;
+      line-height: 1.6;
+    }
+
+    .experience-score strong {
+      color: var(--primary);
+      font-size: 22px;
+      white-space: nowrap;
+    }
+
+    .question-progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      background: var(--accent-soft);
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .question-title {
+      font-weight: 900;
+      color: #1d3549;
+      line-height: 1.7;
+      margin-bottom: 18px;
+      font-size: 20px;
+    }
+
+    .question-code {
+      display: inline-flex;
+      align-items: center;
+      min-width: 54px;
+      justify-content: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #08746f;
+      font-size: 13px;
+      font-weight: 900;
+      margin-right: 8px;
+      letter-spacing: 0.03em;
+    }
+
+    .likert-options {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .likert-option {
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid #d5e0e9;
+      border-radius: 16px;
+      background: #fff;
+      cursor: pointer;
+      padding: 12px 10px;
+      font-size: 14px;
+      font-weight: 900;
+      color: #344b5f;
+      transition: all 0.16s ease;
+    }
+
+    .likert-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .rating-1 { background: linear-gradient(180deg, #fff7f6, #ffffff); border-color: #f3c9c3; }
+    .rating-2 { background: linear-gradient(180deg, #fff7ed, #ffffff); border-color: #f1d4ae; }
+    .rating-3 { background: linear-gradient(180deg, #f6fae8, #ffffff); border-color: #d9e8a6; }
+    .rating-4 { background: linear-gradient(180deg, #edf9f2, #ffffff); border-color: #b7dfc8; }
+
+    .likert-option:has(input:checked) {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(15, 76, 129, 0.15);
+    }
+
+    .rating-1:has(input:checked) { background: #fde3df; border-color: #d92d20; color: #7a271a; }
+    .rating-2:has(input:checked) { background: #ffedd5; border-color: #f79009; color: #7a2e0e; }
+    .rating-3:has(input:checked) { background: #e9f7ba; border-color: #94ba2c; color: #3f6212; }
+    .rating-4:has(input:checked) { background: #d9f7e7; border-color: #12b76a; color: #05603a; }
+
+    .carousel-card {
+      text-align: center;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    .carousel-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+
+
+    .swipe-hint-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 8px 2px 14px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .swipe-hint-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f3f7fb;
+      border: 1px solid #dce7f0;
+    }
+
+    .swipe-deck {
+      position: relative;
+    }
+
+    .tag-card {
+      min-height: 310px;
+      display: grid;
+      place-items: stretch;
+      padding: 0;
+      border: none;
+      border-radius: 28px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: 0 24px 42px rgba(15, 76, 129, 0.22);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.18s ease, background 0.18s ease;
+      cursor: pointer;
+      width: 100%;
+      font: inherit;
+    }
+
+    .tag-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 28px 48px rgba(15, 76, 129, 0.26);
+    }
+
+    .tag-card.is-flipped {
+      color: var(--ink);
+      background: linear-gradient(135deg, #ffffff, #f5fbff);
+      border: 1px solid #d7e7f2;
+    }
+
+    .tag-card::after {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border-radius: 999px;
+      right: -62px;
+      top: -76px;
+      background: rgba(255,255,255,0.12);
+      pointer-events: none;
+    }
+
+    .tag-card.is-flipped::after {
+      background: rgba(15, 76, 129, 0.08);
+    }
+
+    .tag-card-face {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      width: 100%;
+      min-height: 310px;
+      animation: cardContentIn 0.18s ease;
+    }
+
+    @keyframes cardContentIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tag-card-inner {
+      display: grid;
+      gap: 14px;
+      justify-items: center;
+      text-align: center;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .tag-card-kicker {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.24);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .tag-card.is-flipped .tag-card-kicker {
+      color: var(--primary);
+      background: #edf6fd;
+      border-color: #cfe2ed;
+    }
+
+    .tag-card-title {
+      font-size: clamp(30px, 6vw, 48px);
+      font-weight: 950;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      text-wrap: balance;
+    }
+
+    .tag-card-desc {
+      font-size: 16px;
+      line-height: 1.8;
+      color: inherit;
+      opacity: 0.92;
+      max-width: 500px;
+    }
+
+    .tag-card.is-flipped .tag-card-desc {
+      color: #40566a;
+    }
+
+    .tag-info-list {
+      display: grid;
+      gap: 10px;
+      width: min(100%, 560px);
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .tag-info-row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 15px;
+      background: rgba(237, 246, 253, 0.82);
+      border: 1px solid #dceaf4;
+    }
+
+    .tag-info-row strong {
+      color: var(--primary);
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .tag-info-row strong::after {
+      content: "：";
+    }
+
+    .tag-info-row span {
+      color: #354d62;
+      font-weight: 700;
+    }
+
+    .tag-info-row.intro {
+      grid-template-columns: 96px 1fr;
+    }
+
+    .tag-card.is-flipped .tag-card-title {
+      font-size: clamp(24px, 4.8vw, 36px);
+    }
+
+    .carousel-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .tag-nav-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .selected-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+      min-height: 34px;
+      justify-content: center;
+    }
+
+    .selected-pill {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: #edf6fd;
+      border: 1px solid #d2e7f6;
+      color: var(--primary);
+      font-weight: 850;
+      font-size: 13px;
+    }
+
+    .carousel-card.is-complete .carousel-actions,
+    .carousel-card.is-complete .tag-nav-actions,
+    .carousel-card.is-complete .swipe-hint-row {
+      display: none;
+    }
+
+    .tag-card.is-complete {
+      color: var(--ink);
+      background: linear-gradient(135deg, #ffffff, #f4fbff);
+      border: 1px solid #cfe2ed;
+      box-shadow: 0 22px 42px rgba(15, 76, 129, 0.14);
+      cursor: default;
+    }
+
+    .tag-card.is-complete:hover { transform: none; }
+
+    .completion-card {
+      width: min(100%, 560px);
+      display: grid;
+      gap: 16px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .completion-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      font-size: 27px;
+      font-weight: 950;
+      box-shadow: 0 14px 24px rgba(15, 76, 129, 0.20);
+    }
+
+    .completion-title {
+      margin: 0;
+      color: #12324a;
+      font-size: clamp(24px, 4.8vw, 36px);
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+      font-weight: 950;
+    }
+
+    .completion-desc {
+      color: #40566a;
+      line-height: 1.8;
+      max-width: 470px;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .completion-cta-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn-large {
+      padding-inline: 24px;
+      min-height: 56px;
+      font-size: 17px;
+    }
+
+    .btn-attention {
+      animation: pulseAttention 1.4s ease-in-out infinite;
+    }
+
+    @keyframes pulseAttention {
+      0%, 100% { box-shadow: 0 12px 24px rgba(15, 76, 129, 0.22); }
+      50% { box-shadow: 0 16px 34px rgba(15, 76, 129, 0.34); transform: translateY(-1px); }
+    }
+
+    .completion-nudge {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: #edf8f7;
+      border: 1px solid #bfe8e5;
+      color: #0b4b47;
+      font-weight: 850;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .completion-nudge.active { display: block; }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .actions .right-actions,
+    .link-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button,
+    .btn-link {
+      border: none;
+      appearance: none;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border 0.16s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+    }
+
+    button:hover,
+    .btn-link:hover { transform: translateY(-1px); }
+    button:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: 0 12px 24px rgba(15, 76, 129, 0.22);
+    }
+
+    .btn-secondary {
+      color: var(--primary);
+      background: #eef5fb;
+      border: 1px solid #d5e5f1;
+    }
+
+    .btn-ghost {
+      color: #536879;
+      background: transparent;
+      border: 1px solid #d3dfe8;
+    }
+
+    .btn-accent {
+      color: #073c39;
+      background: #dff5f4;
+      border: 1px solid #b8e7e4;
+    }
+
+    .btn-warning {
+      color: #6b2b0c;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+    }
+
+    .error-box {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #fff1f0;
+      color: var(--danger);
+      border: 1px solid #ffd1cd;
+      margin: 16px 0 0;
+      line-height: 1.6;
+      font-weight: 800;
+    }
+
+    .error-box.active { display: block; }
+
+    .result-hero {
+      display: grid;
+      gap: 18px;
+    }
+
+    .result-title {
+      font-size: clamp(25px, 4vw, 34px);
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .result-subtitle {
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 8px;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .score-card {
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: #f7fafc;
+      border: 1px solid #dbe6ef;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .score-label {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .score-value {
+      font-size: 32px;
+      font-weight: 950;
+      color: var(--primary);
+      letter-spacing: -0.04em;
+      margin-top: 12px;
+    }
+
+    .type-badge {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-weight: 950;
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    .explain-card {
+      padding: 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid #cfe2ed;
+      background: linear-gradient(180deg, #f4fbff, #ffffff);
+      line-height: 1.8;
+      color: #2e4c62;
+    }
+
+    .recommendation-box {
+      padding: 20px;
+      border-radius: 22px;
+      background: #0f4c81;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .recommendation-box::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      right: -50px;
+      top: -70px;
+    }
+
+    .recommendation-box h3 { margin-bottom: 12px; }
+
+    .rec-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rec-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      font-weight: 900;
+    }
+
+    .empty-rec {
+      position: relative;
+      z-index: 1;
+      line-height: 1.8;
+      background: rgba(255,255,255,0.12);
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .result-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .link-actions {
+      justify-content: flex-start;
+      padding-top: 4px;
+    }
+
+    .small-print {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-top: 12px;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 760px) {
+      .site-shell {
+        width: min(100% - 20px, var(--max));
+        padding: 14px 0 26px;
+      }
+      .topbar { align-items: flex-start; margin-bottom: 14px; }
+      .brand { gap: 9px; font-size: 14px; }
+      .brand-mark { width: 36px; height: 36px; border-radius: 12px; }
+      .demo-pill { display: none; }
+      .intro-panel { padding: 26px 20px; border-radius: 22px; }
+      .intro-notes { grid-template-columns: 1fr; }
+      .main-card { border-radius: 22px; }
+      .card-header, .screen { padding-left: 18px; padding-right: 18px; }
+      .screen { padding-top: 22px; }
+      .grid-2, .score-grid { grid-template-columns: 1fr; }
+      .likert-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .likert-option { min-height: 64px; }
+      .choice-row { flex-direction: column; }
+      .radio-chip, .checkbox-chip { width: 100%; border-radius: 14px; }
+      .actions { flex-direction: column-reverse; align-items: stretch; }
+      .actions .right-actions, .link-actions { width: 100%; flex-direction: column; }
+      .carousel-actions { grid-template-columns: 1fr; }
+      .tag-card { min-height: 280px; }
+      .swipe-hint-row { flex-direction: column; }
+      button, .btn-link { width: 100%; }
+      h1 { font-size: 34px; }
+      .lead { font-size: 16px; }
+      .course-option { grid-template-columns: auto 1fr; }
+      .course-code { grid-column: 2; justify-self: start; white-space: normal; }
+      .tag-info-row,
+      .tag-info-row.intro { grid-template-columns: 1fr; gap: 4px; }
+      .experience-score { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar" aria-label="網站標題列">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">AI</div>
+        <div>WISE 跨域 AI 學習導航站</div>
+      </div>
+      <div class="demo-pill">Front-end Demo｜localStorage</div>
+    </header>
+
+    <div class="hero-layout">
+      <aside class="intro-panel" aria-label="問卷介紹">
+        <div>
+          <div class="eyebrow">課程推薦系統</div>
+          <h1>跨域 AI 學習導航站</h1>
+          <div class="subtitle">課程推薦問卷</div>
+          <p class="lead">透過幾分鐘的問卷，我們將協助你了解目前的 AI 學習興趣與跨域學習信念，並推薦適合你的課程方向。</p>
+        </div>
+        <div class="intro-notes">
+          <div class="note-card"><strong>01</strong><span>採分段式互動流程，完成後即時產出 A/B/C/D 學習類型。</span></div>
+          <div class="note-card"><strong>02</strong><span>依據已修習或已熟悉課程類型，自動排除重複推薦。</span></div>
+          <div class="note-card"><strong>03</strong><span>展示用 demo，資料僅暫存在你的瀏覽器，不會上傳伺服器。</span></div>
+        </div>
+      </aside>
+
+      <main class="main-card" aria-live="polite">
+        <div class="card-header" id="progressHeader">
+          <div class="progress-row">
+            <div class="step-text" id="stepText">準備開始</div>
+            <div class="save-status" id="saveStatus">尚未填寫</div>
+          </div>
+          <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
+
+        <section class="screen active" id="screen-home" data-screen="home">
+          <h2 class="screen-title">開始前，先了解你的學習位置</h2>
+          <p class="screen-desc">這份問卷會從基本資料、AI 學習經驗、AI 學習興趣、跨域學習信念與已熟悉課程類型進行判斷。完成後，你會看到個人化的課程標籤推薦。</p>
+          <div class="muted-box">Demo 邏輯：AI 學習興趣平均分數由 A02–A06 計算；跨域學習信念平均分數由 B01–B06 計算。A01 與 A01-1 會計算 AI 學習經驗分數，但不納入 A/B/C/D 分類。</div>
+          <div class="actions">
+            <button class="btn-ghost" type="button" id="clearDraftBtn">清除暫存資料</button>
+            <div class="right-actions"><button class="btn-primary" type="button" id="startBtn">開始測驗</button></div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-basic" data-screen="basic">
+          <h2 class="screen-title">基本資料</h2>
+          <p class="screen-desc">這些資料不參與分數計算，只用於結果頁顯示與 demo 資料紀錄。</p>
+          <div class="grid-2">
+            <div class="field">
+              <label for="name" class="required">姓名</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="請輸入姓名" required />
+            </div>
+            <div class="field">
+              <label for="studentId" class="required">學號</label>
+              <input id="studentId" name="studentId" type="text" placeholder="請輸入學號" required />
+            </div>
+            <div class="field">
+              <label for="college" class="required">學院</label>
+              <select id="college" name="college" required></select>
+            </div>
+            <div class="field">
+              <label for="department" class="required">學系 / 學程</label>
+              <select id="department" name="department" required></select>
+            </div>
+            <div class="field">
+              <label for="grade" class="required">年級</label>
+              <select id="grade" name="grade" required>
+                <option value="">請選擇</option>
+                <option>大一</option>
+                <option>大二</option>
+                <option>大三</option>
+                <option>大四</option>
+                <option>碩士班</option>
+                <option>博士班</option>
+                <option>其他</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="gender" class="required">性別</label>
+              <select id="gender" name="gender" required>
+                <option value="">請選擇</option>
+                <option>女性</option>
+                <option>男性</option>
+                <option>非二元性別</option>
+                <option>不願透露</option>
+                <option>其他</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="email" class="required">電子郵件</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required />
+            </div>
+          </div>
+          <div class="field">
+            <label class="checkbox-chip" style="width: fit-content; max-width: 100%; border-radius: 14px;">
+              <input type="checkbox" id="newsletter" name="newsletter" />
+              我願意收到中心相關活動推播電子報
+            </label>
+          </div>
+          <div class="error-box" id="error-basic"></div>
+          <div class="actions">
+            <button class="btn-ghost" type="button" data-back>上一步</button>
+            <div class="right-actions"><button class="btn-primary" type="button" data-next>下一步</button></div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-ai-experience" data-screen="ai-experience">
+          <h2 class="screen-title">AI 學習經驗</h2>
+          <p class="screen-desc">A01 與 A01-1 會計算為 AI 學習經驗分數，作為學習紀錄與後續擴充依據；目前不納入 AI 學習興趣平均分數。</p>
+          <fieldset class="field" style="border:0;padding:0;">
+            <legend class="field-label required">A01：請問您是否有修習與人工智慧（AI）的相關課程？</legend>
+            <div class="choice-row">
+              <label class="radio-chip"><input type="radio" name="A01" value="Yes" /> Yes</label>
+              <label class="radio-chip"><input type="radio" name="A01" value="No" /> No</label>
+            </div>
+          </fieldset>
+          <div class="conditional-panel" id="aiCoursePanel">
+            <div class="field-label">A01-1：請勾選您曾經修習過的 AI 相關課程，可多選</div>
+            <div class="course-groups" id="aiCourseGroups"></div>
+            <div class="field hidden" id="otherCourseField" style="margin-top: 14px;">
+              <label for="otherCourse">其他 AI 課程名稱</label>
+              <input id="otherCourse" name="otherCourse" type="text" placeholder="請輸入其他課程名稱" />
+            </div>
+          </div>
+          <div class="experience-score">
+            <span>目前 AI 學習經驗分數：依 A01 與 A01-1 計算，最高 4 分。</span>
+            <strong id="experienceScoreText">0 / 4</strong>
+          </div>
+          <div class="error-box" id="error-ai-experience"></div>
+          <div class="actions">
+            <button class="btn-ghost" type="button" data-back>上一步</button>
+            <div class="right-actions"><button class="btn-primary" type="button" data-next>下一步</button></div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-ai-scale" data-screen="ai-scale">
+          <h2 class="screen-title">AI 學習興趣問卷 A</h2>
+          <p class="screen-desc">請依照目前狀態作答。選項由左至右代表不同意到同意。</p>
+          <div id="aiQuestionContainer"></div>
+          <div class="error-box" id="error-ai-scale"></div>
+          <div class="actions">
+            <button class="btn-ghost" type="button" data-back>上一步</button>
+            <div class="right-actions">
+              <button class="btn-secondary" type="button" id="demoFillAiBtn">快速示範填答</button>
+              <button class="btn-primary" type="button" data-next>下一步</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-cross-scale" data-screen="cross-scale">
+          <h2 class="screen-title">跨域學習信念問卷 B</h2>
+          <p class="screen-desc">請依照目前狀態作答。選項由左至右代表不同意到同意。</p>
+          <div id="crossQuestionContainer"></div>
+          <div class="error-box" id="error-cross-scale"></div>
+          <div class="actions">
+            <button class="btn-ghost" type="button" data-back>上一步</button>
+            <div class="right-actions">
+              <button class="btn-secondary" type="button" id="demoFillCrossBtn">快速示範填答</button>
+              <button class="btn-primary" type="button" data-next>下一步</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-completed" data-screen="completed">
+          <h2 class="screen-title">已修課程 / 已熟悉課程類型篩選</h2>
+          <p class="screen-desc">請用卡片判斷你已經修習過，或已經相當熟悉的課程類型。每張卡片完成判斷後會自動切到下一張；最後會出現「查看測驗結果」提示。</p>
+          <div class="carousel-card" id="tagCarousel">
+            <div class="carousel-meta">
+              <span id="tagCounter">1 / 6</span>
+              <span>點擊卡片可翻面查看簡介</span>
+            </div>
+            <div class="swipe-hint-row" aria-hidden="true">
+              <span>← 尚未熟悉</span>
+              <span>已熟悉 →</span>
+            </div>
+            <div class="swipe-deck">
+              <div class="tag-card" id="tagCard" tabindex="0" aria-live="polite"></div>
+            </div>
+            <div class="carousel-actions">
+              <button class="btn-warning" type="button" id="markIncompleteBtn">← 尚未熟悉</button>
+              <button class="btn-accent" type="button" id="markCompletedBtn">已熟悉 →</button>
+            </div>
+            <div class="tag-nav-actions">
+              <button class="btn-ghost" type="button" id="prevTagBtn">上一張</button>
+              <button class="btn-secondary" type="button" id="nextTagBtn">略過下一張</button>
+            </div>
+            <div class="selected-tags" id="selectedTagsPreview"></div>
+            <div class="completion-nudge" id="completionNudge">課程篩選已完成。請點擊「查看測驗結果」，系統會依你的填答產生推薦課程方向。</div>
+          </div>
+          <div class="small-print">卡片操作僅用來排除你已經熟悉的推薦方向；若不確定，可選擇尚未熟悉。</div>
+          <div class="error-box" id="error-completed"></div>
+          <div class="actions">
+            <button class="btn-ghost" type="button" data-back>上一步</button>
+            <div class="right-actions"><button class="btn-primary" type="button" id="submitBtn">查看測驗結果</button></div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-result" data-screen="result">
+          <div class="result-hero">
+            <div>
+              <h2 class="result-title" id="resultTitle"></h2>
+              <p class="result-subtitle">系統已根據你的填答完成課程方向比對，以下優先呈現適合下一步探索的課程標籤。</p>
+            </div>
+            <div class="explain-card" id="typeExplain"></div>
+            <div class="recommendation-box">
+              <h3>推薦課程標籤前三名</h3>
+              <div id="recommendationList" class="rec-tags"></div>
+            </div>
+            <div class="result-actions">
+              <div class="link-actions">
+                <a class="btn-link btn-primary" href="#" data-demo-link="課程規劃表">查看跨領域 AI 學分學程課程規劃表</a>
+                <a class="btn-link btn-secondary" href="#" data-demo-link="中心連結">中心連結</a>
+                <a class="btn-link btn-accent hidden" id="bachelorBtn" href="#" data-demo-link="跨領域學士簡介">查看跨領域學士簡介</a>
+              </div>
+              <div class="actions">
+                <button class="btn-ghost" type="button" id="backToFormBtn">回到上一頁修改</button>
+                <div class="right-actions"><button class="btn-primary" type="button" id="restartBtn">重新測驗</button></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "wise_ai_learning_nav_survey_v2";
+
+    const screens = ["home", "basic", "ai-experience", "ai-scale", "cross-scale", "completed", "result"];
+    const formStepScreens = ["basic", "ai-experience", "ai-scale", "cross-scale", "completed"];
+
+    const collegeDepartmentMap = {
+      "理學院": ["化學系", "生科系", "物理系", "應數系"],
+      "工學院": ["光電系", "材光系", "資工系", "電機系", "機電系"],
+      "海洋科學院": ["海工系", "海科系", "海資系"],
+      "文學院": ["中文系", "外文系", "劇藝系", "音樂系"],
+      "管理學院": ["企管系", "財管系", "國經管", "資管系"],
+      "社會科學院": ["社會系", "政經系"],
+      "西灣學院": ["人科學系 / 人科學程", "國際原民專班"],
+      "醫學院": ["生醫系", "護理系"]
+    };
+
+    const aiCourseGroups = [
+      {
+        category: "基礎認識",
+        hint: "AI 觀念、倫理與入門",
+        courses: [
+          { name: "人工智慧倫理", code: "AI10003 / GEAE2234" },
+          { name: "生成式人工智慧與機器學習導論", code: "AI10006" },
+          { name: "AI 應用規劃基礎入門", code: "GEAE2450" }
+        ]
+      },
+      {
+        category: "技術開發",
+        hint: "資料、模型與工程實作",
+        courses: [
+          { name: "資料探勘與應用", code: "AI50003" },
+          { name: "自然語言處理", code: "AI50004" },
+          { name: "深度學習", code: "AI50007" },
+          { name: "電腦視覺實務與深度學習", code: "AI50010" }
+        ]
+      },
+      {
+        category: "應用整合",
+        hint: "人機互動、生成式 AI 與跨域應用",
+        courses: [
+          { name: "智慧人機互動", code: "AI50009" },
+          { name: "生成式 AI 的人文導論", code: "AI50014 / GEAE2448" },
+          { name: "其他", code: "自行輸入" }
+        ]
+      }
+    ];
+
+    const completedTagOptions = ["*AI初階課程", "*AI高階課程", "*跨域探索課程", "*跨域實作課程", "*系選修課程", "*博雅通識課程"];
+
+    const tagInfoMap = {
+      "*AI初階課程": {
+        name: "*AI初階課程",
+        intro: "適合剛開始接觸 AI 的學生，從人工智慧基本概念、倫理議題、工具使用與入門應用開始建立基礎理解。",
+        unit: "跨領域 AI 學分學程、博雅教育中心或各開課系所",
+        professor: "依當學期課程公告",
+        code: "示例：AI10003、AI10006、GEAE2450"
+      },
+      "*AI高階課程": {
+        name: "*AI高階課程",
+        intro: "適合已具備基礎 AI 概念、程式或資料處理經驗的學生，進一步學習機器學習、深度學習、自然語言處理、電腦視覺等技術主題。",
+        unit: "跨領域 AI 學分學程、資工系、電機系或相關開課單位",
+        professor: "依當學期課程公告",
+        code: "示例：AI50004、AI50007、AI50010、CSE523"
+      },
+      "*跨域探索課程": {
+        name: "*跨域探索課程",
+        intro: "適合正在尋找學習方向的學生，透過議題探索、領域觀察與跨域對話，理解不同專業如何與 AI 或科技應用產生連結。",
+        unit: "西灣學院、跨域課程開課單位或合作學系",
+        professor: "依當學期課程公告",
+        code: "課程標籤示例：跨域探索類；實際課號待課程資料庫串接"
+      },
+      "*跨域實作課程": {
+        name: "*跨域實作課程",
+        intro: "適合已有初步方向，想把 AI、資料或科技工具與自身專長結合，完成專題、作品、提案或應用原型的學生。",
+        unit: "西灣學院、跨域實作課程或專題合作單位",
+        professor: "依當學期課程公告",
+        code: "課程標籤示例：跨域實作類；實際課號待課程資料庫串接"
+      },
+      "*系選修課程": {
+        name: "*系選修課程",
+        intro: "適合先深化自身學系的核心專業能力，讓學生以本系知識作為未來跨域整合、AI 應用或專題發展的基礎。",
+        unit: "學生所屬學系或相關專業學系",
+        professor: "依各系選修課程公告",
+        code: "依各學系選修課號為準"
+      },
+      "*博雅通識課程": {
+        name: "*博雅通識課程",
+        intro: "適合從低門檻、廣泛探索的角度開始，透過人文、社會、科技與生活議題建立跨域學習視野。",
+        unit: "西灣學院、博雅教育中心或通識課程開課單位",
+        professor: "依當學期課程公告",
+        code: "示例：GEAE2234、GEAE2448、GEAE2450"
+      }
+    };
+
+    const aiLikertQuestions = [
+      { code: "A02", text: "我能夠清楚地說出人工智慧的定義、原理與規範" },
+      { code: "A03", text: "我希望探索更多關於 AI 可以如何輔助我在學習或日常生活的可能性" },
+      { code: "A04", text: "我希望探索除了 AI 工程師外，還有哪些未來與 AI 結合的職涯可能性" },
+      { code: "A05", text: "我希望我能夠區辨出不同 AI 工具的偏見、風險跟價值差異" },
+      { code: "A06", text: "我期待自己能夠將既有專長與 AI 整合並應用，做出點什麼" }
+    ];
+
+    const crossLikertQuestions = [
+      { code: "B01", text: "我有明確的跨領域學習目標" },
+      { code: "B02", text: "我相信跨領域有獨特的一套方法或觀念可以執行學習" },
+      { code: "B03", text: "我有自信能夠在未來就業時應用多種不同的領域專長" },
+      { code: "B04", text: "我清楚我的跨域專長組合能夠對接未來產業人才需求方向" },
+      { code: "B05", text: "我清楚我的跨域經驗能協助我與不同專長的人彼此理解與對話" },
+      { code: "B06", text: "我清楚我的跨域經驗能夠協助我串連不同專長的人共同合作解決問題" }
+    ];
+
+    const likertOptions = [
+      { value: 1, label: "非常不同意" },
+      { value: 2, label: "有點不同意" },
+      { value: 3, label: "有點同意" },
+      { value: 4, label: "非常同意" }
+    ];
+
+    const typeNames = {
+      A: "低興趣、低信念",
+      B: "高興趣、低信念",
+      C: "低興趣、高信念",
+      D: "高興趣、高信念"
+    };
+
+    const typeExplanations = {
+      A: "你目前可能還在探索自己的學習方向，適合先從低門檻、廣泛探索型課程開始，慢慢建立對 AI 與跨域學習的理解。",
+      B: "你對 AI 有明顯興趣，但可能還不確定如何把 AI 和其他領域整合。適合從 AI 基礎與進階課程開始，逐步累積技術理解。",
+      C: "你對跨域學習有較高認同，但目前對 AI 的興趣或熟悉度可能還在建立中。適合從跨域探索與 AI 初階課程開始，找到 AI 和自身專長的連結。",
+      D: "你同時具備 AI 學習興趣與跨域學習信念，適合進一步挑戰整合型、實作型課程，將 AI 與不同領域結合成具體作品。"
+    };
+
+    const recommendationMap = {
+      A: ["*系選修課程", "*博雅通識課程"],
+      B: ["*AI初階課程", "*AI高階課程"],
+      C: ["*跨域探索課程", "*AI初階課程"],
+      D: ["*AI初階課程", "*AI高階課程", "*跨域探索課程", "*跨域實作課程"]
+    };
+
+    const state = {
+      currentScreen: "home",
+      ui: { aiQuestionIndex: 0, crossQuestionIndex: 0, tagIndex: 0, tagFlipped: false },
+      data: {
+        name: "",
+        studentId: "",
+        college: "",
+        department: "",
+        grade: "",
+        gender: "",
+        email: "",
+        newsletter: "No",
+        A01: "",
+        aiCourses: [],
+        otherCourse: "",
+        likertA: {},
+        likertB: {},
+        completedTags: [],
+        reviewedTags: []
+      }
+    };
+
+    function qs(selector, root = document) { return root.querySelector(selector); }
+    function qsa(selector, root = document) { return Array.from(root.querySelectorAll(selector)); }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function setRadioValue(name, value) {
+      qsa(`input[name="${name}"]`).forEach(input => { input.checked = input.value === value; });
+    }
+
+    function getRadioValue(name) {
+      const checked = qs(`input[name="${name}"]:checked`);
+      return checked ? checked.value : "";
+    }
+
+    function getCheckedValues(name) {
+      return qsa(`input[name="${name}"]:checked`).map(input => input.value);
+    }
+
+    function setCheckedValues(name, values) {
+      qsa(`input[name="${name}"]`).forEach(input => { input.checked = values.includes(input.value); });
+    }
+
+    function renderCollegeOptions() {
+      const college = qs("#college");
+      college.innerHTML = `<option value="">請選擇學院</option>` + Object.keys(collegeDepartmentMap)
+        .map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
+    }
+
+    function renderDepartmentOptions() {
+      const collegeValue = qs("#college").value;
+      const department = qs("#department");
+      const departments = collegeDepartmentMap[collegeValue] || [];
+      department.innerHTML = `<option value="">${collegeValue ? "請選擇學系 / 學程" : "請先選擇學院"}</option>` + departments
+        .map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
+      department.disabled = !collegeValue;
+    }
+
+    function renderCourseGroups() {
+      const container = qs("#aiCourseGroups");
+      container.innerHTML = aiCourseGroups.map(group => `
+        <section class="course-group">
+          <div class="course-group-title"><span>${escapeHtml(group.category)}</span><span>${escapeHtml(group.hint)}</span></div>
+          <div class="course-list">
+            ${group.courses.map(course => `
+              <label class="course-option">
+                <input type="checkbox" name="aiCourses" value="${escapeHtml(course.name)}" />
+                <span class="course-name">${escapeHtml(course.name)}</span>
+                <span class="course-code">${escapeHtml(course.code)}</span>
+              </label>
+            `).join("")}
+          </div>
+        </section>
+      `).join("");
+    }
+
+    function renderLikertQuestion(kind) {
+      const isAi = kind === "ai";
+      const questions = isAi ? aiLikertQuestions : crossLikertQuestions;
+      const indexKey = isAi ? "aiQuestionIndex" : "crossQuestionIndex";
+      const container = qs(isAi ? "#aiQuestionContainer" : "#crossQuestionContainer");
+      const question = questions[state.ui[indexKey]];
+      const groupPrefix = isAi ? "A" : "B";
+      container.innerHTML = `
+        <div class="question-progress">${question.code}｜第 ${state.ui[indexKey] + 1} 題，共 ${questions.length} 題</div>
+        <fieldset class="question-card">
+          <legend class="question-title"><span class="question-code">${question.code}</span>${escapeHtml(question.text)}</legend>
+          <div class="likert-options">
+            ${likertOptions.map(opt => `
+              <label class="likert-option rating-${opt.value}">
+                <input type="radio" name="${groupPrefix}_${question.code}" value="${opt.value}" />
+                <span>${escapeHtml(opt.label)}</span>
+              </label>
+            `).join("")}
+          </div>
+        </fieldset>
+      `;
+      const savedValue = isAi ? state.data.likertA[question.code] : state.data.likertB[question.code];
+      if (savedValue) setRadioValue(`${groupPrefix}_${question.code}`, String(savedValue));
+    }
+
+    function renderTagCarousel() {
+      const isComplete = state.ui.tagIndex >= completedTagOptions.length;
+      const carousel = qs("#tagCarousel");
+      const card = qs("#tagCard");
+      const submitBtn = qs("#submitBtn");
+      const nudge = qs("#completionNudge");
+      carousel.classList.toggle("is-complete", isComplete);
+      card.classList.toggle("is-complete", isComplete);
+
+      if (isComplete) {
+        qs("#tagCounter").textContent = `完成 ${completedTagOptions.length} / ${completedTagOptions.length}`;
+        card.classList.remove("is-flipped");
+        card.innerHTML = `
+          <div class="tag-card-face">
+            <div class="completion-card">
+              <div class="completion-icon">✓</div>
+              <h3 class="completion-title">課程篩選已完成</h3>
+              <p class="completion-desc">你已完成所有課程類型卡片的判斷。下一步請點擊「查看測驗結果」，系統會依據你的填答產生課程推薦方向。</p>
+              <div class="completion-cta-row">
+                <button class="btn-primary btn-large" type="button" data-submit-result>查看測驗結果</button>
+                <button class="btn-ghost" type="button" data-review-last>回看上一張</button>
+              </div>
+            </div>
+          </div>
+        `;
+        qs("#prevTagBtn").disabled = false;
+        qs("#nextTagBtn").disabled = true;
+        submitBtn.disabled = false;
+        submitBtn.classList.add("btn-attention");
+        submitBtn.textContent = "查看測驗結果";
+        nudge.classList.add("active");
+        qs("#selectedTagsPreview").innerHTML = state.data.completedTags.length
+          ? state.data.completedTags.map(tagName => `<span class="selected-pill">${escapeHtml(tagName)}</span>`).join("")
+          : `<span class="small-print">你沒有勾選需要排除的課程類型，系統將保留完整推薦方向。</span>`;
+        return;
+      }
+
+      const tag = completedTagOptions[state.ui.tagIndex];
+      const info = tagInfoMap[tag] || {
+        name: tag,
+        intro: "這是一個可依中心課程資料持續擴充的推薦課程類型。",
+        unit: "依課程資料庫設定",
+        professor: "依當學期公告",
+        code: "待串接正式課程資料"
+      };
+      qs("#tagCounter").textContent = `${state.ui.tagIndex + 1} / ${completedTagOptions.length}`;
+      const isFlipped = Boolean(state.ui.tagFlipped);
+      card.classList.toggle("is-flipped", isFlipped);
+      card.innerHTML = isFlipped ? `
+        <div class="tag-card-face tag-card-back">
+          <div class="tag-card-inner">
+            <div class="tag-card-kicker">課程資訊</div>
+            <div class="tag-info-list">
+              <div class="tag-info-row">
+                <strong>課程名稱</strong>
+                <span>${escapeHtml(info.name)}</span>
+              </div>
+              <div class="tag-info-row intro">
+                <strong>課程簡介</strong>
+                <span>${escapeHtml(info.intro)}</span>
+              </div>
+              <div class="tag-info-row">
+                <strong>開課單位</strong>
+                <span>${escapeHtml(info.unit)}</span>
+              </div>
+              <div class="tag-info-row">
+                <strong>授課教授</strong>
+                <span>${escapeHtml(info.professor)}</span>
+              </div>
+              <div class="tag-info-row">
+                <strong>課號</strong>
+                <span>${escapeHtml(info.code)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ` : `
+        <div class="tag-card-face tag-card-front">
+          <div class="tag-card-inner">
+            <div class="tag-card-kicker">課程類型卡</div>
+            <div class="tag-card-title">${escapeHtml(tag)}</div>
+            <div class="tag-card-desc">點擊卡片翻面，查看這類課程的簡介、開課單位、授課教授與課號資訊。</div>
+          </div>
+        </div>
+      `;
+      qs("#prevTagBtn").disabled = state.ui.tagIndex === 0;
+      qs("#nextTagBtn").disabled = false;
+      qs("#nextTagBtn").textContent = state.ui.tagIndex === completedTagOptions.length - 1 ? "完成篩選" : "略過下一張";
+      submitBtn.disabled = true;
+      submitBtn.classList.remove("btn-attention");
+      submitBtn.textContent = "完成篩選後查看結果";
+      nudge.classList.remove("active");
+      qs("#selectedTagsPreview").innerHTML = state.data.completedTags.length
+        ? state.data.completedTags.map(tagName => `<span class="selected-pill">${escapeHtml(tagName)}</span>`).join("")
+        : `<span class="small-print">尚未選入任何需要排除的課程類型。</span>`;
+    }
+
+    function calculateExperienceScore() {
+      if (state.data.A01 !== "Yes") return 0;
+      const selectedCount = state.data.aiCourses.filter(name => name !== "其他" || state.data.otherCourse).length;
+      return Math.min(4, selectedCount || 1);
+    }
+
+    function updateExperienceScore() {
+      qs("#experienceScoreText").textContent = `${calculateExperienceScore()} / 4`;
+    }
+
+    function persistFromDom() {
+      state.data.name = qs("#name").value.trim();
+      state.data.studentId = qs("#studentId").value.trim();
+      state.data.college = qs("#college").value;
+      state.data.department = qs("#department").value;
+      state.data.grade = qs("#grade").value;
+      state.data.gender = qs("#gender").value;
+      state.data.email = qs("#email").value.trim();
+      state.data.newsletter = qs("#newsletter").checked ? "Yes" : "No";
+      state.data.A01 = getRadioValue("A01");
+      state.data.aiCourses = getCheckedValues("aiCourses");
+      state.data.otherCourse = qs("#otherCourse").value.trim();
+
+      aiLikertQuestions.forEach(q => {
+        const value = getRadioValue(`A_${q.code}`);
+        if (value) state.data.likertA[q.code] = Number(value);
+      });
+      crossLikertQuestions.forEach(q => {
+        const value = getRadioValue(`B_${q.code}`);
+        if (value) state.data.likertB[q.code] = Number(value);
+      });
+
+      updateExperienceScore();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      updateSaveStatus();
+    }
+
+    function restoreToDom() {
+      qs("#name").value = state.data.name || "";
+      qs("#studentId").value = state.data.studentId || "";
+      qs("#college").value = state.data.college || "";
+      renderDepartmentOptions();
+      qs("#department").value = state.data.department || "";
+      qs("#grade").value = state.data.grade || "";
+      qs("#gender").value = state.data.gender || "";
+      qs("#email").value = state.data.email || "";
+      qs("#newsletter").checked = state.data.newsletter === "Yes";
+      qs("#otherCourse").value = state.data.otherCourse || "";
+      setRadioValue("A01", state.data.A01 || "");
+      setCheckedValues("aiCourses", state.data.aiCourses || []);
+      updateAiCoursePanel();
+      updateOtherCourseField();
+      renderLikertQuestion("ai");
+      renderLikertQuestion("cross");
+      renderTagCarousel();
+      updateExperienceScore();
+      updateSaveStatus();
+    }
+
+    function loadSavedState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const saved = JSON.parse(raw);
+        if (saved?.data) {
+          state.currentScreen = saved.currentScreen || "home";
+          state.ui = { ...state.ui, ...(saved.ui || {}) };
+          state.data = { ...state.data, ...saved.data };
+          state.data.likertA = saved.data.likertA || {};
+          state.data.likertB = saved.data.likertB || {};
+          state.data.aiCourses = saved.data.aiCourses || [];
+          state.data.completedTags = saved.data.completedTags || [];
+          state.data.reviewedTags = saved.data.reviewedTags || [];
+        }
+      } catch (error) {
+        console.warn("無法讀取暫存資料：", error);
+      }
+    }
+
+    function showScreen(screen) {
+      state.currentScreen = screen;
+      qsa(".screen").forEach(el => el.classList.remove("active"));
+      qs(`#screen-${screen}`).classList.add("active");
+      if (screen === "ai-scale") renderLikertQuestion("ai");
+      if (screen === "cross-scale") renderLikertQuestion("cross");
+      if (screen === "completed") renderTagCarousel();
+      updateProgress(screen);
+      clearAllErrors();
+      if (screen === "result") renderResult();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function updateProgress(screen) {
+      const stepText = qs("#stepText");
+      const progressBar = qs("#progressBar");
+      const stepIndex = formStepScreens.indexOf(screen);
+      if (screen === "home") {
+        stepText.textContent = "準備開始";
+        progressBar.style.width = "0%";
+      } else if (screen === "result") {
+        stepText.textContent = "完成測驗";
+        progressBar.style.width = "100%";
+      } else if (stepIndex >= 0) {
+        stepText.textContent = `Step ${stepIndex + 1} / ${formStepScreens.length}`;
+        progressBar.style.width = `${((stepIndex + 1) / formStepScreens.length) * 100}%`;
+      }
+    }
+
+    function updateSaveStatus() {
+      const savedRaw = localStorage.getItem(STORAGE_KEY);
+      qs("#saveStatus").textContent = savedRaw ? "已自動暫存於本機" : "尚未填寫";
+    }
+
+    function clearAllErrors() {
+      qsa(".error-box").forEach(box => { box.textContent = ""; box.classList.remove("active"); });
+    }
+
+    function showError(screen, message) {
+      const box = qs(`#error-${screen}`);
+      if (box) { box.textContent = message; box.classList.add("active"); }
+    }
+
+    function validateCurrentScreen() {
+      clearAllErrors();
+      const data = state.data;
+      if (state.currentScreen === "basic") {
+        const required = [data.name, data.studentId, data.college, data.department, data.grade, data.gender, data.email];
+        if (required.some(v => !v)) {
+          showError("basic", "請完成所有基本資料欄位後再前往下一步。");
+          return false;
+        }
+        const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
+        if (!emailIsValid) {
+          showError("basic", "請輸入有效的電子郵件格式。");
+          return false;
+        }
+      }
+      if (state.currentScreen === "ai-experience") {
+        if (!data.A01) {
+          showError("ai-experience", "請回答 A01：是否有修習與 AI 相關課程。");
+          return false;
+        }
+        if (data.aiCourses.includes("其他") && !data.otherCourse) {
+          showError("ai-experience", "你已勾選「其他」，請補充其他 AI 課程名稱。");
+          return false;
+        }
+      }
+      if (state.currentScreen === "ai-scale") {
+        const q = aiLikertQuestions[state.ui.aiQuestionIndex];
+        if (!data.likertA[q.code]) {
+          showError("ai-scale", `請完成 ${q.code} 題項後再前往下一步。`);
+          return false;
+        }
+      }
+      if (state.currentScreen === "cross-scale") {
+        const q = crossLikertQuestions[state.ui.crossQuestionIndex];
+        if (!data.likertB[q.code]) {
+          showError("cross-scale", `請完成 ${q.code} 題項後再前往下一步。`);
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function goNext() {
+      persistFromDom();
+      if (!validateCurrentScreen()) return;
+      if (state.currentScreen === "ai-scale") {
+        if (state.ui.aiQuestionIndex < aiLikertQuestions.length - 1) {
+          state.ui.aiQuestionIndex += 1;
+          renderLikertQuestion("ai");
+          clearAllErrors();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          return;
+        }
+      }
+      if (state.currentScreen === "cross-scale") {
+        if (state.ui.crossQuestionIndex < crossLikertQuestions.length - 1) {
+          state.ui.crossQuestionIndex += 1;
+          renderLikertQuestion("cross");
+          clearAllErrors();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          return;
+        }
+      }
+      const currentIndex = formStepScreens.indexOf(state.currentScreen);
+      if (currentIndex >= 0 && currentIndex < formStepScreens.length - 1) showScreen(formStepScreens[currentIndex + 1]);
+    }
+
+    function goBack() {
+      persistFromDom();
+      if (state.currentScreen === "basic") { showScreen("home"); return; }
+      if (state.currentScreen === "ai-scale" && state.ui.aiQuestionIndex > 0) {
+        state.ui.aiQuestionIndex -= 1;
+        renderLikertQuestion("ai");
+        clearAllErrors();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        return;
+      }
+      if (state.currentScreen === "cross-scale" && state.ui.crossQuestionIndex > 0) {
+        state.ui.crossQuestionIndex -= 1;
+        renderLikertQuestion("cross");
+        clearAllErrors();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        return;
+      }
+      const currentIndex = formStepScreens.indexOf(state.currentScreen);
+      if (currentIndex > 0) showScreen(formStepScreens[currentIndex - 1]);
+    }
+
+    function updateAiCoursePanel() {
+      const panel = qs("#aiCoursePanel");
+      const a01 = getRadioValue("A01");
+      panel.classList.toggle("is-disabled", a01 === "No");
+      if (a01 === "No") {
+        qsa('input[name="aiCourses"]').forEach(input => input.checked = false);
+        qs("#otherCourse").value = "";
+      }
+      persistLight();
+    }
+
+    function updateOtherCourseField() {
+      const otherChecked = getCheckedValues("aiCourses").includes("其他");
+      qs("#otherCourseField").classList.toggle("hidden", !otherChecked);
+      if (!otherChecked) qs("#otherCourse").value = "";
+      persistLight();
+    }
+
+    function persistLight() {
+      state.data.A01 = getRadioValue("A01");
+      state.data.aiCourses = getCheckedValues("aiCourses");
+      state.data.otherCourse = qs("#otherCourse")?.value.trim() || "";
+      updateExperienceScore();
+    }
+
+    function markTagReviewed(tag) {
+      const reviewed = new Set(state.data.reviewedTags || []);
+      reviewed.add(tag);
+      state.data.reviewedTags = Array.from(reviewed).filter(tagName => completedTagOptions.includes(tagName));
+    }
+
+    function moveTag(delta) {
+      if (state.ui.tagIndex >= completedTagOptions.length) {
+        state.ui.tagIndex = completedTagOptions.length - 1;
+        state.ui.tagFlipped = false;
+        renderTagCarousel();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        return;
+      }
+      if (delta > 0 && state.ui.tagIndex === completedTagOptions.length - 1) {
+        const tag = completedTagOptions[state.ui.tagIndex];
+        markTagReviewed(tag);
+        state.ui.tagIndex = completedTagOptions.length;
+        state.ui.tagFlipped = false;
+        renderTagCarousel();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        return;
+      }
+      state.ui.tagIndex = Math.max(0, Math.min(completedTagOptions.length - 1, state.ui.tagIndex + delta));
+      state.ui.tagFlipped = false;
+      renderTagCarousel();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function setCurrentTagCompleted(isCompleted) {
+      if (state.ui.tagIndex >= completedTagOptions.length) return;
+      const tag = completedTagOptions[state.ui.tagIndex];
+      const set = new Set(state.data.completedTags || []);
+      if (isCompleted) set.add(tag); else set.delete(tag);
+      state.data.completedTags = Array.from(set).filter(tagName => completedTagOptions.includes(tagName));
+      markTagReviewed(tag);
+      if (state.ui.tagIndex < completedTagOptions.length - 1) {
+        state.ui.tagIndex += 1;
+      } else {
+        state.ui.tagIndex = completedTagOptions.length;
+      }
+      state.ui.tagFlipped = false;
+      renderTagCarousel();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function submitSurvey() {
+      persistFromDom();
+      showScreen("result");
+    }
+
+    function calculateMean(values) {
+      const validValues = values.filter(value => typeof value === "number" && !Number.isNaN(value));
+      if (!validValues.length) return 0;
+      return validValues.reduce((sum, value) => sum + value, 0) / validValues.length;
+    }
+
+    function classify(aiMean, crossMean) {
+      if (aiMean <= 2.8 && crossMean <= 3) return "A";
+      if (aiMean > 2.8 && crossMean <= 3) return "B";
+      if (aiMean <= 2.8 && crossMean > 3) return "C";
+      return "D";
+    }
+
+    function getResult() {
+      const aiMean = calculateMean(aiLikertQuestions.map(q => state.data.likertA[q.code]));
+      const crossMean = calculateMean(crossLikertQuestions.map(q => state.data.likertB[q.code]));
+      const type = classify(aiMean, crossMean);
+      const finalRecommendations = recommendationMap[type]
+        .filter(tag => !state.data.completedTags.includes(tag))
+        .slice(0, 3);
+      return { aiMean, crossMean, type, finalRecommendations, aiExperienceScore: calculateExperienceScore() };
+    }
+
+    function renderResult() {
+      const { aiMean, crossMean, type, finalRecommendations } = getResult();
+      const studentName = state.data.name || "同學";
+      qs("#resultTitle").textContent = `${studentName}，這是你的 AI × 跨域學習導航結果`;
+      qs("#typeExplain").textContent = typeExplanations[type];
+      const recContainer = qs("#recommendationList");
+      if (finalRecommendations.length) {
+        recContainer.className = "rec-tags";
+        recContainer.innerHTML = finalRecommendations.map(tag => `<span class="rec-tag">${escapeHtml(tag)}</span>`).join("");
+      } else {
+        recContainer.className = "empty-rec";
+        recContainer.textContent = "你已完成目前此類型的主要推薦方向，建議查看完整課程規劃表，尋找更進階或更個人化的學習安排。";
+      }
+      qs("#bachelorBtn").classList.toggle("hidden", !["C", "D"].includes(type));
+    }
+
+    function formatScore(value) { return Number(value).toFixed(1).replace(/\.0$/, ".0"); }
+
+    function fillDemoValues(target) {
+      if (target === "ai") {
+        const values = { A02: 2, A03: 4, A04: 4, A05: 3, A06: 4 };
+        Object.assign(state.data.likertA, values);
+        renderLikertQuestion("ai");
+      }
+      if (target === "cross") {
+        const values = { B01: 2, B02: 3, B03: 3, B04: 2, B05: 3, B06: 3 };
+        Object.assign(state.data.likertB, values);
+        renderLikertQuestion("cross");
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      updateSaveStatus();
+    }
+
+    function restart() {
+      localStorage.removeItem(STORAGE_KEY);
+      state.currentScreen = "home";
+      state.ui = { aiQuestionIndex: 0, crossQuestionIndex: 0, tagIndex: 0, tagFlipped: false };
+      state.data = {
+        name: "", studentId: "", college: "", department: "", grade: "", gender: "", email: "", newsletter: "No",
+        A01: "", aiCourses: [], otherCourse: "", likertA: {}, likertB: {}, completedTags: [], reviewedTags: []
+      };
+      restoreToDom();
+      showScreen("home");
+    }
+
+    function initSwipe() {
+      const card = qs("#tagCard");
+      let startX = 0;
+      let startY = 0;
+      let didSwipe = false;
+      card.addEventListener("click", () => {
+        if (didSwipe || state.ui.tagIndex >= completedTagOptions.length) return;
+        state.ui.tagFlipped = !state.ui.tagFlipped;
+        renderTagCarousel();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      });
+      card.addEventListener("touchstart", event => {
+        startX = event.changedTouches[0].clientX;
+        startY = event.changedTouches[0].clientY;
+      }, { passive: true });
+      card.addEventListener("touchend", event => {
+        if (state.ui.tagIndex >= completedTagOptions.length) return;
+        const endX = event.changedTouches[0].clientX;
+        const endY = event.changedTouches[0].clientY;
+        const diffX = endX - startX;
+        const diffY = endY - startY;
+        if (Math.abs(diffX) < 70 || Math.abs(diffX) < Math.abs(diffY)) return;
+        didSwipe = true;
+        setCurrentTagCompleted(diffX > 0);
+        window.setTimeout(() => { didSwipe = false; }, 220);
+      }, { passive: true });
+      card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          if (state.ui.tagIndex >= completedTagOptions.length) return;
+          state.ui.tagFlipped = !state.ui.tagFlipped;
+          renderTagCarousel();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+        if (event.key === "ArrowRight") setCurrentTagCompleted(true);
+        if (event.key === "ArrowLeft") setCurrentTagCompleted(false);
+      });
+    }
+
+    function initEvents() {
+      document.body.addEventListener("input", event => {
+        if (event.target.matches("input, select, textarea")) persistFromDom();
+      });
+      document.body.addEventListener("change", event => {
+        if (event.target.id === "college") {
+          state.data.college = event.target.value;
+          state.data.department = "";
+          renderDepartmentOptions();
+        }
+        if (event.target.name === "A01") updateAiCoursePanel();
+        if (event.target.name === "aiCourses") updateOtherCourseField();
+        if (event.target.matches("input, select, textarea")) persistFromDom();
+      });
+
+      qs("#startBtn").addEventListener("click", () => showScreen("basic"));
+      qs("#clearDraftBtn").addEventListener("click", restart);
+      qsa("[data-next]").forEach(btn => btn.addEventListener("click", goNext));
+      qsa("[data-back]").forEach(btn => btn.addEventListener("click", goBack));
+      qs("#submitBtn").addEventListener("click", submitSurvey);
+      qs("#restartBtn").addEventListener("click", restart);
+      qs("#backToFormBtn").addEventListener("click", () => showScreen("completed"));
+      qs("#demoFillAiBtn").addEventListener("click", () => fillDemoValues("ai"));
+      qs("#demoFillCrossBtn").addEventListener("click", () => fillDemoValues("cross"));
+      qs("#prevTagBtn").addEventListener("click", () => moveTag(-1));
+      qs("#nextTagBtn").addEventListener("click", () => moveTag(1));
+      qs("#markCompletedBtn").addEventListener("click", () => setCurrentTagCompleted(true));
+      qs("#markIncompleteBtn").addEventListener("click", () => setCurrentTagCompleted(false));
+      document.body.addEventListener("click", event => {
+        const submitTarget = event.target.closest("[data-submit-result]");
+        if (submitTarget) submitSurvey();
+        const reviewLastTarget = event.target.closest("[data-review-last]");
+        if (reviewLastTarget) moveTag(-1);
+      });
+      qsa("[data-demo-link]").forEach(link => {
+        link.addEventListener("click", event => {
+          event.preventDefault();
+          alert(`Demo 提示：這裡可串接正式的「${link.dataset.demoLink}」網址。`);
+        });
+      });
+      initSwipe();
+    }
+
+    function init() {
+      renderCollegeOptions();
+      renderDepartmentOptions();
+      renderCourseGroups();
+      loadSavedState();
+      restoreToDom();
+      initEvents();
+      showScreen(screens.includes(state.currentScreen) ? state.currentScreen : "home");
+    }
+
+    init();
+  </script>
+</body>
+</html>
